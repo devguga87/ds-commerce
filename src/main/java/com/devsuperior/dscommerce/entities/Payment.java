@@ -5,29 +5,24 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name="tb_order")
-public class Order {
+@Table(name = "tb_payment")
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant moment;
-    private OrderStatus status;
 
-    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
-    private Payment payment;
+    @OneToOne
+    @MapsId
+    private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private User client;
+    public Payment(){
+    }
 
-    public Order(){}
-
-    public Order(Long id, Instant moment, OrderStatus status){
+    public Payment(Long id, Instant moment){
         this.id = id;
         this.moment = moment;
-        this.status = status;
     }
 
     public Long getId(){
@@ -42,15 +37,7 @@ public class Order {
         return moment;
     }
 
-    public void setMoment(){
+    public void setMoment(Instant moment){
         this.moment = moment;
-    }
-
-    public OrderStatus getStatus(){
-        return status;
-    }
-
-    public void setStatus(OrderStatus status){
-        this.status = status;
     }
 }
