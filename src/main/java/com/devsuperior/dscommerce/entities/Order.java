@@ -49,7 +49,7 @@ public class Order {
         return moment;
     }
 
-    public void setMoment(){
+    public void setMoment(Instant moment){
         this.moment = moment;
     }
 
